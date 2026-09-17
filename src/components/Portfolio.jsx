@@ -148,8 +148,59 @@ export default function Portfolio() {
         })}
       </main>
 
-      <footer className="px-6 py-10 text-xs uppercase tracking-widest2 text-ink/40 md:px-10">
-        &copy; {new Date().getFullYear()} L&rsquo;Atelier a Bali
+      <footer className="bg-ink px-6 py-14 text-paper md:px-10">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs uppercase tracking-widest2 text-clay">Contact Info</p>
+
+          <div className="mt-6 grid gap-8 sm:grid-cols-3">
+            <div className="flex gap-3">
+              <svg viewBox="0 0 24 24" fill="none" className="mt-0.5 h-5 w-5 shrink-0 text-clay">
+                <path
+                  d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                />
+                <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <p className="text-sm leading-relaxed text-paper/80">
+                Jl. Gn. Tangkuban Perahu No. 228, Kerobokan Kelod, Kec. Kuta
+                Utara, Kabupaten Badung, Bali 80361
+              </p>
+            </div>
+
+            <a
+              href="mailto:contact@latelierabali.com"
+              className="flex h-fit items-center gap-3 text-sm text-paper/80 transition hover:text-clay"
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5 shrink-0 text-clay">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                <path d="m4 7 8 6 8-6" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              contact@latelierabali.com
+            </a>
+
+            <a
+              href="https://wa.me/6287863260506"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-start gap-3 text-sm text-paper/80 transition hover:text-clay"
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="mt-0.5 h-5 w-5 shrink-0 text-clay">
+                <path
+                  d="M6.5 4h1.6c.4 0 .8.3.9.7l1 3a1 1 0 0 1-.3 1L8 10.3a10 10 0 0 0 5.7 5.7l1.6-1.7a1 1 0 0 1 1-.3l3 1c.4.1.7.5.7.9v1.6c0 1-.9 1.8-1.9 1.6C11.6 18.4 5.6 12.4 4.9 5.9 4.7 4.9 5.5 4 6.5 4Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              +62 878-6326-0506
+            </a>
+          </div>
+
+          <p className="mt-12 text-xs uppercase tracking-widest2 text-paper/30">
+            &copy; {new Date().getFullYear()} L&rsquo;Atelier a Bali
+          </p>
+        </div>
       </footer>
 
       {lightbox && (
