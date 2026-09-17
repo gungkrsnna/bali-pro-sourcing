@@ -1,8 +1,6 @@
 // Extracted from the "L'Atelier a Bali" catalogue (source-assets/latelier a bali catalogue.pptx)
 // `slug` maps to its real photo folder in public/images/projects/<slug>/ — see src/data/projectImages.js
 
-export const CATEGORIES = ['All', 'Villa Design', 'Interior Design', 'House Design', 'Furniture Design', 'Hospitality', 'Products']
-
 export const projects = [
   {
     slug: 'le-casamore-corsica',
@@ -279,53 +277,5 @@ export const projects = [
     description:
       'A captivating visual identity for the 1920 Hotel Montenegro, drawing inspiration from the timeless elegance of European luxury between the two World Wars, combined with the raw, majestic beauty of the Montenegrin landscape. Classic typography and a muted, Art-Deco-era palette evoke nostalgia and opulence.',
     highlight: 'Subtle historical references add authenticity and intrigue, telling the story of a bygone era of travel and aristocracy.',
-  },
-  {
-    slug: 'table',
-    client: 'Table',
-    location: 'Product Range',
-    category: 'Products',
-    tag: 'Furniture',
-    year: '',
-    rooms: [],
-    description:
-      'Solid wood and rattan dining, coffee and side tables crafted for tropical and contemporary interiors.',
-    highlight: '',
-  },
-  {
-    slug: 'sofa-and-chair',
-    client: 'Sofa & Chair',
-    location: 'Product Range',
-    category: 'Products',
-    tag: 'Furniture',
-    year: '',
-    rooms: [],
-    description:
-      'Custom-upholstered sofas, armchairs and lounge seating built for comfort and durability.',
-    highlight: '',
-  },
-  {
-    slug: 'furniture',
-    client: 'Furniture',
-    location: 'Product Range',
-    category: 'Products',
-    tag: 'Furniture',
-    year: '',
-    rooms: [],
-    description:
-      'Bedroom, storage and living pieces produced by Balinese artisans to your specification.',
-    highlight: '',
-  },
-  {
-    slug: 'arm-chair',
-    client: 'Arm Chair',
-    location: 'Product Range',
-    category: 'Products',
-    tag: 'Furniture',
-    year: '',
-    rooms: [],
-    description:
-      'Statement armchairs combining natural materials with sculptural, handcrafted forms.',
-    highlight: '',
   },
 ]

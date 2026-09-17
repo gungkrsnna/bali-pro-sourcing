@@ -24,8 +24,4 @@ export const projectImages = {
   'maxime-design': ["1.png","2.png","3.png","4.png","5.png","6.png","7.png"],
   'didier-design': ["1.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png","10.png","11.png","12.png","13.png","14.png"],
   '1920-hotel-montenegro': ["1.jpeg","2.jpeg","3.jpeg","4.jpeg","5.png","6.png","7.png","8.png","9.png"],
-  'table': ['table.png'],
-  'sofa-and-chair': ['sofa-and-chair.png'],
-  'furniture': ['furniture.png'],
-  'arm-chair': ['arm-chair.png'],
 }

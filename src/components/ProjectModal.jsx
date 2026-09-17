@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { projectImages } from '../data/projectImages'
-import { imageDir } from '../lib/imagePath'
 import ImageSlot from './ImageSlot'
 import Lightbox from './Lightbox'
 
@@ -26,10 +25,9 @@ export default function ProjectModal({ project, onClose }) {
   if (!project) return null
 
   const files = projectImages[project.slug] || []
-  const dir = imageDir(project)
   const lightboxImages = files.map((file, i) => ({
-    path: `/images/${dir}/${file}`,
-    label: `images/${dir}/${file}`,
+    path: `/images/projects/${project.slug}/${file}`,
+    label: `images/projects/${project.slug}/${file}`,
     alt: `${project.client} photo ${i + 1}`,
   }))
 
@@ -89,8 +87,8 @@ export default function ProjectModal({ project, onClose }) {
                 aria-label={`Open photo ${i + 1} full size`}
               >
                 <ImageSlot
-                  path={`/images/${dir}/${file}`}
-                  label={`images/${dir}/${file}`}
+                  path={`/images/projects/${project.slug}/${file}`}
+                  label={`images/projects/${project.slug}/${file}`}
                   alt={`${project.client} photo ${i + 1}`}
                   className="aspect-square w-full transition duration-300 group-hover:scale-105"
                 />
