@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { projects } from '../data/projects'
 import { projectImages } from '../data/projectImages'
+import { projectVideos } from '../data/projectVideos'
 import ImageSlot from './ImageSlot'
 import ProjectModal from './ProjectModal'
 
@@ -27,6 +28,11 @@ export default function Portfolio() {
                 <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-3 py-1 text-[10px] uppercase tracking-widest2 text-ink">
                   {project.tag}
                 </span>
+                {projectVideos[project.slug]?.length > 0 && (
+                  <span className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-paper/90 text-ink">
+                    <span className="ml-0.5 h-0 w-0 border-y-[5px] border-l-[8px] border-y-transparent border-l-ink" />
+                  </span>
+                )}
               </div>
               <div className="mt-4 flex items-start justify-between gap-3">
                 <div>

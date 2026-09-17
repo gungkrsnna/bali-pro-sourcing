@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
-import { projectImages } from '../data/projectImages'
+import { getGallery } from '../data/projectGallery'
 import ImageSlot from './ImageSlot'
 import Lightbox from './Lightbox'
+
+function mediaPath(slug, item) {
+  return item.type === 'video' ? `/videos/${slug}/${item.file}` : `/images/projects/${slug}/${item.file}`
+}
 
 export default function ProjectModal({ project, onClose }) {
   const [lightboxIndex, setLightboxIndex] = useState(null)
@@ -24,11 +28,12 @@ export default function ProjectModal({ project, onClose }) {
 
   if (!project) return null
 
-  const files = projectImages[project.slug] || []
-  const lightboxImages = files.map((file, i) => ({
-    path: `/images/projects/${project.slug}/${file}`,
-    label: `images/projects/${project.slug}/${file}`,
-    alt: `${project.client} photo ${i + 1}`,
+  const gallery = getGallery(project.slug)
+  const lightboxItems = gallery.map((item, i) => ({
+    type: item.type,
+    path: mediaPath(project.slug, item),
+    label: mediaPath(project.slug, item),
+    alt: `${project.client} ${item.type} ${i + 1}`,
   }))
 
   return (
@@ -79,32 +84,53 @@ export default function ProjectModal({ project, onClose }) {
           )}
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {files.map((file, i) => (
-              <button
-                key={file}
-                onClick={() => setLightboxIndex(i)}
-                className="group overflow-hidden rounded-sm"
-                aria-label={`Open photo ${i + 1} full size`}
-              >
-                <ImageSlot
-                  path={`/images/projects/${project.slug}/${file}`}
-                  label={`images/projects/${project.slug}/${file}`}
-                  alt={`${project.client} photo ${i + 1}`}
-                  className="aspect-square w-full transition duration-300 group-hover:scale-105"
-                />
-              </button>
-            ))}
+            {gallery.map((item, i) =>
+              item.type === 'video' ? (
+                <button
+                  key={item.file}
+                  onClick={() => setLightboxIndex(i)}
+                  className="group relative col-span-2 overflow-hidden rounded-sm sm:col-span-3"
+                  aria-label={`Play video ${i + 1}`}
+                >
+                  <video
+                    src={mediaPath(project.slug, item)}
+                    muted
+                    preload="metadata"
+                    className="aspect-video w-full object-cover"
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center bg-ink/10 transition group-hover:bg-ink/25">
+                    <span className="flex h-14 w-14 items-center justify-center rounded-full bg-paper/90 shadow-md transition group-hover:scale-105">
+                      <span className="ml-1 h-0 w-0 border-y-[9px] border-l-[14px] border-y-transparent border-l-ink" />
+                    </span>
+                  </span>
+                </button>
+              ) : (
+                <button
+                  key={item.file}
+                  onClick={() => setLightboxIndex(i)}
+                  className="group overflow-hidden rounded-sm"
+                  aria-label={`Open photo ${i + 1} full size`}
+                >
+                  <ImageSlot
+                    path={mediaPath(project.slug, item)}
+                    label={mediaPath(project.slug, item)}
+                    alt={`${project.client} photo ${i + 1}`}
+                    className="aspect-square w-full transition duration-300 group-hover:scale-105"
+                  />
+                </button>
+              ),
+            )}
           </div>
         </div>
       </div>
 
       {lightboxIndex !== null && (
         <Lightbox
-          images={lightboxImages}
+          images={lightboxItems}
           index={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex((i) => (i - 1 + files.length) % files.length)}
-          onNext={() => setLightboxIndex((i) => (i + 1) % files.length)}
+          onPrev={() => setLightboxIndex((i) => Math.max(0, i - 1))}
+          onNext={() => setLightboxIndex((i) => Math.min(lightboxItems.length - 1, i + 1))}
         />
       )}
     </div>

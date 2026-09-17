@@ -3,15 +3,18 @@ import { createPortal } from 'react-dom'
 import ImageSlot from './ImageSlot'
 
 export default function Lightbox({ images, index, onClose, onPrev, onNext }) {
+  const atStart = index === 0
+  const atEnd = index === images.length - 1
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose()
-      if (e.key === 'ArrowLeft') onPrev()
-      if (e.key === 'ArrowRight') onNext()
+      if (e.key === 'ArrowLeft' && !atStart) onPrev()
+      if (e.key === 'ArrowRight' && !atEnd) onNext()
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [onClose, onPrev, onNext])
+  }, [onClose, onPrev, onNext, atStart, atEnd])
 
   const current = images[index]
   if (!current) return null
@@ -40,20 +43,22 @@ export default function Lightbox({ images, index, onClose, onPrev, onNext }) {
           <button
             onClick={(e) => {
               e.stopPropagation()
-              onPrev()
+              if (!atStart) onPrev()
             }}
+            disabled={atStart}
             aria-label="Previous image"
-            className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-paper/30 text-2xl text-paper transition hover:border-clay hover:text-clay sm:left-6"
+            className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-paper/30 text-2xl text-paper transition hover:border-clay hover:text-clay disabled:opacity-30 disabled:hover:border-paper/30 disabled:hover:text-paper sm:left-6"
           >
             &#8249;
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation()
-              onNext()
+              if (!atEnd) onNext()
             }}
+            disabled={atEnd}
             aria-label="Next image"
-            className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-paper/30 text-2xl text-paper transition hover:border-clay hover:text-clay sm:right-6"
+            className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-paper/30 text-2xl text-paper transition hover:border-clay hover:text-clay disabled:opacity-30 disabled:hover:border-paper/30 disabled:hover:text-paper sm:right-6"
           >
             &#8250;
           </button>
@@ -61,13 +66,24 @@ export default function Lightbox({ images, index, onClose, onPrev, onNext }) {
       )}
 
       <div className="max-h-full max-w-full" onClick={(e) => e.stopPropagation()}>
-        <ImageSlot
-          path={current.path}
-          label={current.label}
-          alt={current.alt}
-          className="max-h-[85vh] max-w-[90vw]"
-          imgClassName="!h-auto !w-auto !max-h-[85vh] !max-w-[90vw] !object-contain"
-        />
+        {current.type === 'video' ? (
+          <video
+            key={current.path}
+            src={current.path}
+            controls
+            autoPlay
+            playsInline
+            className="max-h-[85vh] max-w-[90vw]"
+          />
+        ) : (
+          <ImageSlot
+            path={current.path}
+            label={current.label}
+            alt={current.alt}
+            className="max-h-[85vh] max-w-[90vw]"
+            imgClassName="!h-auto !w-auto !max-h-[85vh] !max-w-[90vw] !object-contain"
+          />
+        )}
       </div>
 
       {images.length > 1 && (

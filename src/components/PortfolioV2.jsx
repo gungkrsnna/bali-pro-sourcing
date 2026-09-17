@@ -1,35 +1,23 @@
 import { useState } from 'react'
 import { projects } from '../data/projects'
-import { projectImages } from '../data/projectImages'
+import { getGallery } from '../data/projectGallery'
 import ImageSlot from './ImageSlot'
 import Lightbox from './Lightbox'
 import ProjectNav from './ProjectNav'
 
-// Repeating column-span / aspect-ratio rhythm for the mosaic grid below each
-// hero image, so the grid never falls into a flat, uniform pattern.
-// The grid is 2 columns on mobile and 6 columns from `md` up, so every span
-// pair below is mobile-span first, desktop-span second — never spans more
-// columns than the mobile grid actually has (that mismatch was rendering
-// tiny, squashed images on small screens).
-const MOSAIC_PATTERN = [
-  { span: 'col-span-2 md:col-span-4', aspect: 'aspect-[4/3]' },
-  { span: 'col-span-1 md:col-span-2', aspect: 'aspect-[3/4]' },
-  { span: 'col-span-1 md:col-span-2', aspect: 'aspect-[3/4]' },
-  { span: 'col-span-1 md:col-span-2', aspect: 'aspect-square' },
-  { span: 'col-span-1 md:col-span-2', aspect: 'aspect-square' },
-  { span: 'col-span-1 md:col-span-3', aspect: 'aspect-[4/3]' },
-  { span: 'col-span-1 md:col-span-3', aspect: 'aspect-[4/3]' },
-  { span: 'col-span-2 md:col-span-6', aspect: 'aspect-[21/9]' },
-]
+function mediaPath(slug, item) {
+  return item.type === 'video' ? `/videos/${slug}/${item.file}` : `/images/projects/${slug}/${item.file}`
+}
 
 export default function PortfolioV2() {
   const [lightbox, setLightbox] = useState(null) // { slug, index } | null
 
-  const lightboxFiles = lightbox ? projectImages[lightbox.slug] || [] : []
-  const lightboxImages = lightboxFiles.map((file, i) => ({
-    path: `/images/projects/${lightbox?.slug}/${file}`,
-    label: `images/projects/${lightbox?.slug}/${file}`,
-    alt: `photo ${i + 1}`,
+  const lightboxGallery = lightbox ? getGallery(lightbox.slug) : []
+  const lightboxItems = lightboxGallery.map((item, i) => ({
+    type: item.type,
+    path: mediaPath(lightbox?.slug, item),
+    label: mediaPath(lightbox?.slug, item),
+    alt: `${item.type} ${i + 1}`,
   }))
 
   return (
@@ -54,8 +42,8 @@ export default function PortfolioV2() {
 
       <main>
         {projects.map((project, i) => {
-          const files = projectImages[project.slug] || []
-          const [hero, ...rest] = files
+          const gallery = getGallery(project.slug)
+          const [hero, ...galleryRest] = gallery
           const flipped = i % 2 === 1
 
           return (
@@ -103,30 +91,52 @@ export default function PortfolioV2() {
                     aria-label={`Open ${project.client} photo 1 full size`}
                   >
                     <ImageSlot
-                      path={`/images/projects/${project.slug}/${hero}`}
-                      label={`images/projects/${project.slug}/${hero}`}
+                      path={mediaPath(project.slug, hero)}
+                      label={mediaPath(project.slug, hero)}
                       alt={project.client}
                       className="aspect-[16/9] w-full transition duration-500 group-hover:scale-[1.02]"
                     />
                   </button>
                 )}
 
-                {rest.length > 0 && (
-                  <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-6">
-                    {rest.map((file, idx) => {
-                      const pattern = MOSAIC_PATTERN[idx % MOSAIC_PATTERN.length]
+                {galleryRest.length > 0 && (
+                  <div className="mt-3 columns-2 gap-3 md:columns-3 lg:columns-4">
+                    {galleryRest.map((item, idx) => {
+                      const galleryIndex = idx + 1 // the hero already used index 0
+                      if (item.type === 'video') {
+                        return (
+                          <button
+                            key={item.file}
+                            onClick={() => setLightbox({ slug: project.slug, index: galleryIndex })}
+                            className="group relative mb-3 block w-full break-inside-avoid overflow-hidden"
+                            aria-label={`Play ${project.client} video`}
+                          >
+                            <video
+                              src={mediaPath(project.slug, item)}
+                              muted
+                              preload="metadata"
+                              className="aspect-video w-full object-cover"
+                            />
+                            <span className="absolute inset-0 flex items-center justify-center bg-ink/10 transition group-hover:bg-ink/25">
+                              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-paper/90 shadow-md transition group-hover:scale-105">
+                                <span className="ml-1 h-0 w-0 border-y-[9px] border-l-[14px] border-y-transparent border-l-ink" />
+                              </span>
+                            </span>
+                          </button>
+                        )
+                      }
                       return (
                         <button
-                          key={file}
-                          onClick={() => setLightbox({ slug: project.slug, index: idx + 1 })}
-                          className={`${pattern.span} group block overflow-hidden`}
-                          aria-label={`Open ${project.client} photo ${idx + 2} full size`}
+                          key={item.file}
+                          onClick={() => setLightbox({ slug: project.slug, index: galleryIndex })}
+                          className="group mb-3 block w-full overflow-hidden break-inside-avoid"
+                          aria-label={`Open ${project.client} photo ${galleryIndex + 1} full size`}
                         >
                           <ImageSlot
-                            path={`/images/projects/${project.slug}/${file}`}
-                            label={`images/projects/${project.slug}/${file}`}
+                            path={mediaPath(project.slug, item)}
+                            label={mediaPath(project.slug, item)}
                             alt={project.client}
-                            className={`${pattern.aspect} w-full transition duration-500 group-hover:scale-105`}
+                            className="w-full transition duration-500 group-hover:scale-105"
                           />
                         </button>
                       )
@@ -145,17 +155,17 @@ export default function PortfolioV2() {
 
       {lightbox && (
         <Lightbox
-          images={lightboxImages}
+          images={lightboxItems}
           index={lightbox.index}
           onClose={() => setLightbox(null)}
           onPrev={() =>
-            setLightbox((lb) => ({
-              ...lb,
-              index: (lb.index - 1 + lightboxFiles.length) % lightboxFiles.length,
-            }))
+            setLightbox((lb) => ({ ...lb, index: Math.max(0, lb.index - 1) }))
           }
           onNext={() =>
-            setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lightboxFiles.length }))
+            setLightbox((lb) => ({
+              ...lb,
+              index: Math.min(lightboxItems.length - 1, lb.index + 1),
+            }))
           }
         />
       )}
