@@ -1,0 +1,8 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# Original PPTX catalogue (441MB) — source material only, not needed in the repo.
+# Already extracted into public/images/. Keep it locally, don't commit it.
+source-assets/
