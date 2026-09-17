@@ -15,15 +15,27 @@ export const projects = [
     highlight: 'Complete furniture projects managed remotely for international hospitality properties — design, technical development, artisan production and manufacturing follow-up.',
   },
   {
+    slug: 'fabrice-interior',
+    client: 'Fabrice',
+    location: 'Corsica, France',
+    category: 'Interior Design',
+    tag: 'Interior Design',
+    year: '2024',
+    rooms: ['Bedroom', 'Dining Room', 'Decoration'],
+    description:
+      'The "Fabrice — Corsica" project combines modern elegance with rustic charm — wooden panel walls, soft neutral furnishings, and statement pendant lights. Bedrooms exude warmth with woven headboards and ambient lighting, while open dining spaces connect seamlessly to panoramic views.',
+    highlight: 'Indoor and outdoor living blended in perfect harmony.',
+  },
+  {
     slug: 'private-villa-bali',
-    client: 'Private Villa',
+    client: 'Villa Bliss',
     location: 'Bali, Indonesia',
     category: 'Villa Design',
     tag: 'Full Furniture Design',
     year: '2026',
     rooms: ['Top View', 'Pool View', 'Gate', 'Living Room', 'Bathroom', 'Kitchen Set', 'Bedroom'],
     description:
-      "For this private villa in Bali, L'Atelier a Bali carried out the complete furnishing and interior setup of the property. Delivered as a full furniture package — selection, production and installation of every interior element: furniture, lighting, decorative pieces, curtains, soft furnishings and accessories.",
+      "For Villa Bliss, a private villa in Bali, L'Atelier a Bali carried out the complete furnishing and interior setup of the property. Delivered as a full furniture package — selection, production and installation of every interior element: furniture, lighting, decorative pieces, curtains, soft furnishings and accessories.",
     highlight: 'A fully furnished villa with a cohesive interior atmosphere, combining comfort, functionality and refined tropical living.',
   },
   {
@@ -40,7 +52,7 @@ export const projects = [
   },
   {
     slug: 'guillaume-design',
-    client: 'Guillaume',
+    client: 'Villa Guillaume',
     location: 'Tabanan, Bali',
     category: 'Villa Design',
     tag: 'Villa Design',
@@ -52,7 +64,7 @@ export const projects = [
   },
   {
     slug: 'anibal-design',
-    client: 'Anibal',
+    client: 'Villa Anibal',
     location: 'Bali, Indonesia',
     category: 'Villa Design',
     tag: 'Villa Design',
@@ -64,14 +76,14 @@ export const projects = [
   },
   {
     slug: 'jacque-design',
-    client: 'Jacque',
+    client: 'Villa Jacques',
     location: 'Bali, Indonesia',
     category: 'Villa Design',
     tag: 'Villa Design',
     year: '2024',
     rooms: ['Pool', 'Backyard', 'Living Room', 'Bedroom'],
     description:
-      'Jacque Villa captures the essence of Mediterranean architecture fused with natural elements and contemporary elegance — clean lines, earthy tones, and handcrafted wooden furniture, from rustic bedroom setups with artisanal lighting to open-air dining framed by elegant arches.',
+      'Villa Jacques captures the essence of Mediterranean architecture fused with natural elements and contemporary elegance — clean lines, earthy tones, and handcrafted wooden furniture, from rustic bedroom setups with artisanal lighting to open-air dining framed by elegant arches.',
     highlight: 'Modern comfort blended with traditional charm for an unforgettable retreat.',
   },
   {
@@ -85,18 +97,6 @@ export const projects = [
     description:
       'The "House of Paul" blends modern and tropical design with natural materials. Bathrooms feature sleek fixtures, freestanding bathtubs, stone accents and soft lighting; the outdoor terrace offers spacious dining under wooden ceilings and lush greenery; bedrooms showcase wooden headboards and large windows.',
     highlight: 'Rustic wooden furniture paired with elegant blue marble accents — comfort and style in balance.',
-  },
-  {
-    slug: 'fabrice-interior',
-    client: 'Fabrice',
-    location: 'Corsica, France',
-    category: 'Interior Design',
-    tag: 'Interior Design',
-    year: '2024',
-    rooms: ['Bedroom', 'Dining Room', 'Decoration'],
-    description:
-      'The "Fabrice — Corsica" project combines modern elegance with rustic charm — wooden panel walls, soft neutral furnishings, and statement pendant lights. Bedrooms exude warmth with woven headboards and ambient lighting, while open dining spaces connect seamlessly to panoramic views.',
-    highlight: 'Indoor and outdoor living blended in perfect harmony.',
   },
   {
     slug: 'mm-villa-design',

@@ -20,6 +20,7 @@ export default function ImageSlot({ path, alt = '', label, className = '', imgCl
     <img
       src={path}
       alt={alt}
+      draggable={false}
       onError={() => setFailed(true)}
       className={`${className} ${imgClassName} object-cover`}
       loading="lazy"
